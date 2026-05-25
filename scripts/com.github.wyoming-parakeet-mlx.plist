@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.github.wyoming-parakeet-mlx</string>
+
+    <!-- Adjust this path to wherever `wyoming-parakeet-mlx` is installed.
+         If you used `uv tool install` or `pipx install`, run
+         `which wyoming-parakeet-mlx` and paste the result here. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/wyoming-parakeet-mlx</string>
+        <string>--uri</string>
+        <string>tcp://0.0.0.0:10300</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>WYOMING_PARAKEET_MODEL</key>
+        <string>mlx-community/parakeet-tdt-0.6b-v3</string>
+        <key>WYOMING_PARAKEET_LOG_LEVEL</key>
+        <string>INFO</string>
+        <!-- ffmpeg is usually at /opt/homebrew/bin on Apple Silicon Macs -->
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/wyoming-parakeet-mlx.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/wyoming-parakeet-mlx.log</string>
+</dict>
+</plist>

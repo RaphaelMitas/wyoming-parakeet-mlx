@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-unit:
+    name: Lint + unit tests (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package (without MLX)
+        run: |
+          python -m pip install --upgrade pip
+          # parakeet-mlx is conditional on darwin/arm64, so on Linux this
+          # only pulls in wyoming + dev tooling.
+          pip install -e ".[dev]"
+      - name: Lint
+        run: |
+          ruff check .
+          ruff format --check .
+      - name: Unit tests
+        run: pytest -m "not requires_mlx" -v
+
+  e2e-mac:
+    name: E2E (Apple Silicon)
+    runs-on: macos-14
+    continue-on-error: true  # don't block merges on runner availability
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install ffmpeg
+        run: brew install ffmpeg
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Lint
+        run: ruff check .
+      - name: All tests (unit + E2E)
+        run: pytest -v
