@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.pytest_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build artifacts
+build/
+dist/
+*.whl
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Model cache (don't commit downloaded models)
+models/
+.cache/
+
+# Logs
+*.log
